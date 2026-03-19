@@ -55,22 +55,6 @@ CO₂               Carbon footprint comparison — overland vs. flying
 DARK MODE         System-aware theme with native dark map tiles
 ```
 
-<br>
-
-## Design System
-
-> Zero gradients. Zero shadows. Zero border-radius. Typography does all the work.
-
-| | |
-|---|---|
-| **Palette** | `#000000` black · `#FFFFFF` white · `#FF0066` magenta |
-| **Typography** | Inter — hierarchy through weight and size only |
-| **Geometry** | `border-radius: 0` on every element |
-| **Elevation** | 1px borders, no box shadows |
-| **Navbar** | Always black, both themes |
-| **Reference** | [MIT Media Lab identity by Pentagram](https://www.pentagram.com/work/mit-media-lab) |
-
-<br>
 
 ## Quick Start
 
