@@ -12,7 +12,7 @@
 
 **Overland travel route planner.**
 <br>
-From Tokyo to Antarctica — no flights required.
+From Tokyo to Antarctica, no flights required.
 
 <br>
 
