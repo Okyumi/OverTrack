@@ -1,76 +1,164 @@
-# OverTrack
+<div align="center">
 
-**Overland travel route planner — from Tokyo to Antarctica, no flights required.**
+<br>
 
-OverTrack computes feasible multi-country overland routes using trains, buses, ferries, and cruise ships. Enter any two cities and receive a complete journey plan with operators, durations, border crossing notes, and CO₂ comparisons.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/OVER-TRACK-FF0066?style=for-the-badge&labelColor=000&color=FF0066">
+  <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/OVER-TRACK-FF0066?style=for-the-badge&labelColor=000&color=FF0066">
+  <img alt="OverTrack" src="https://img.shields.io/badge/OVER-TRACK-FF0066?style=for-the-badge&labelColor=000&color=FF0066" height="36">
+</picture>
+
+<br><br>
+
+**Overland travel route planner.**
+<br>
+From Tokyo to Antarctica — no flights required.
+
+<br>
+
+[![MIT License](https://img.shields.io/badge/License-MIT-000?style=flat-square)](LICENSE)
+[![React](https://img.shields.io/badge/React_19-000?style=flat-square&logo=react&logoColor=fff)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-000?style=flat-square&logo=typescript&logoColor=fff)](https://typescriptlang.org)
+[![Tailwind](https://img.shields.io/badge/Tailwind_CSS-000?style=flat-square&logo=tailwindcss&logoColor=fff)](https://tailwindcss.com)
+[![Leaflet](https://img.shields.io/badge/Leaflet-000?style=flat-square&logo=leaflet&logoColor=fff)](https://leafletjs.com)
+
+<br>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/screenshot-light.png">
+  <img alt="OverTrack — route planner interface" src="docs/screenshot-light.png" width="100%">
+</picture>
+
+</div>
+
+<br>
 
 ---
 
+<br>
+
+## Overview
+
+OverTrack computes feasible multi-country overland routes using trains, buses, ferries, and cruise ships. Enter any two cities and receive a complete journey plan with operators, durations, border crossing notes, and carbon footprint comparisons against flying.
+
+The interface is modeled after the [MIT Media Lab](https://media.mit.edu) visual identity — a design system built on pure black, pure white, and a single magenta accent, with zero decoration.
+
+<br>
+
 ## Features
 
-- **Dijkstra pathfinding** across a graph of 191 cities, 254 connections, and 103 transport operators
-- **Interactive Leaflet map** with CartoDB tiles (light/dark) and color-coded transport types
-- **Itinerary builder** with adjustable rest days, departure dates, and pace settings
-- **Carbon footprint comparison** — overland vs. flying
-- **Operator directory** — searchable, filterable, with booking links
-- **Dark mode** with automatic system preference detection
+```
+PATHFINDING       Dijkstra shortest-path across 191 cities, 254 connections
+OPERATORS         103 transport operators with booking links
+MAP               Interactive Leaflet with CartoDB light/dark tiles
+ITINERARY         Adjustable rest days, departure date, pace settings
+CO₂               Carbon footprint comparison — overland vs. flying
+DARK MODE         System-aware theme with native dark map tiles
+```
 
-## Design
+<br>
 
-Visual identity inspired by the MIT Media Lab — designed by [Pentagram](https://www.pentagram.com/work/mit-media-lab):
+## Design System
 
-| Principle | Implementation |
+> Zero gradients. Zero shadows. Zero border-radius. Typography does all the work.
+
+| | |
 |---|---|
-| Color | `#000` / `#FFF` / `#FF0066` — nothing else |
-| Typography | Inter, weight hierarchy only |
-| Geometry | `border-radius: 0` everywhere |
-| Elevation | 1px borders, zero shadows |
-| Navbar | Always black, regardless of theme |
+| **Palette** | `#000000` black · `#FFFFFF` white · `#FF0066` magenta |
+| **Typography** | Inter — hierarchy through weight and size only |
+| **Geometry** | `border-radius: 0` on every element |
+| **Elevation** | 1px borders, no box shadows |
+| **Navbar** | Always black, both themes |
+| **Reference** | [MIT Media Lab identity by Pentagram](https://www.pentagram.com/work/mit-media-lab) |
+
+<br>
+
+## Quick Start
+
+```bash
+git clone https://github.com/Okyumi/OverTrack.git
+cd OverTrack
+npm install --legacy-peer-deps
+npm run dev
+```
+
+Open **http://localhost:5000** — the default route loads Tokyo → Ushuaia.
+
+<br>
+
+## Architecture
+
+```
+client/src/
+├── components/
+│   ├── Navbar.tsx           # Always-black nav with OT monogram
+│   ├── RouteMap.tsx         # Leaflet map with dual CartoDB tiles
+│   ├── LegsList.tsx         # Expandable route legs sidebar
+│   └── RouteStats.tsx       # Black stats bar with mono numbers
+├── pages/
+│   ├── route-planner.tsx    # Main map + sidebar layout
+│   ├── operators.tsx        # Filterable operator directory
+│   └── itinerary.tsx        # Timeline builder with CO₂ card
+└── lib/
+    ├── theme.tsx            # System-aware dark mode (no localStorage)
+    └── queryClient.ts       # TanStack Query + API helpers
+
+server/
+├── routes.ts               # Express API endpoints
+└── storage.ts              # In-memory graph + Dijkstra pathfinding
+
+shared/
+└── schema.ts               # Drizzle schema + Zod validation
+```
+
+<br>
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 19, Tailwind CSS 3, shadcn/ui, Leaflet |
-| Backend | Express, Drizzle ORM, in-memory storage |
-| Routing | Wouter (hash-based) |
+| Frontend | React 19 · Tailwind CSS 3 · shadcn/ui · Leaflet + react-leaflet |
+| Backend | Express · Drizzle ORM · In-memory storage |
+| Routing | Wouter with hash-based navigation |
 | Data | TanStack React Query v5 |
-| Build | Vite 7, TypeScript |
+| Build | Vite 7 · TypeScript · esbuild |
 
-## Getting Started
-
-```bash
-npm install --legacy-peer-deps
-npm run dev
-```
-
-Server starts at `http://localhost:5000`.
-
-## Project Structure
-
-```
-client/src/
-  components/    Navbar, RouteMap, LegsList, RouteStats
-  pages/         route-planner, operators, itinerary
-  lib/           theme, queryClient
-server/
-  routes.ts      API endpoints
-  storage.ts     Graph + Dijkstra pathfinding
-shared/
-  schema.ts      Drizzle schema + Zod validation
-```
+<br>
 
 ## Route Data
 
-The database contains overland connections spanning:
+The database covers overland connections spanning four continents:
 
-- **Asia** — Japan, South Korea, China, Mongolia, Russia, Southeast Asia, Central Asia, Middle East
-- **Europe** — Trans-Siberian corridor, Western Europe rail network
-- **Africa** — East Africa bus routes, Southern Africa rail
-- **South America** — Andean bus corridors, Patagonia to Ushuaia
+| Region | Coverage |
+|---|---|
+| **East Asia** | Japan rail (Shinkansen), South Korea (KTX/Korail), China (CR high-speed) |
+| **Central Asia** | Trans-Mongolian, Trans-Siberian, Kazakhstan–Uzbekistan corridors |
+| **Europe** | Eurostar, TGV, Deutsche Bahn, Thalys, Flixbus network |
+| **Middle East & Africa** | Turkey–Iran, East Africa bus routes, Southern Africa rail |
+| **South America** | Andean buses, Chile–Argentina crossings, Patagonia to Ushuaia |
 
-Each connection includes operator, duration, distance, confidence level, and border crossing notes.
+Each connection includes: operator, duration, distance, confidence level (verified / likely / unverified), border crossing notes, and visa information.
+
+<br>
+
+## Production Build
+
+```bash
+npm run build
+NODE_ENV=production node dist/index.cjs
+```
+
+<br>
 
 ## License
 
 MIT
+
+<br>
+
+---
+
+<div align="center">
+<sub>Built with precision.</sub>
+</div>
