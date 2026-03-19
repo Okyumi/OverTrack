@@ -42,9 +42,7 @@ From Tokyo to Antarctica — no flights required.
 
 OverTrack computes feasible multi-country overland routes using trains, buses, ferries, and cruise ships. Enter any two cities and receive a complete journey plan with operators, durations, border crossing notes, and carbon footprint comparisons against flying.
 
-The interface is modeled after the [MIT Media Lab](https://media.mit.edu) visual identity — a design system built on pure black, pure white, and a single magenta accent, with zero decoration.
 
-<br>
 
 ## Features
 
